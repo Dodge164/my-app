@@ -1,6 +1,70 @@
-import React from 'react';
+// import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './components/app/';
+// import App from './components/app/';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+class WhoAmI extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      years: 26,
+    };
+    /*
+// III способ также подходит для state, но тогда комментировать строки 9-12 и 29
+  state = {
+    years: 26,
+  };
+*/
+    //I способ добавления обработчика событий на каждый элемент
+    this.nextYear = this.nextYear.bind(this);
+    /* II способ добавления обработчика событий на каждый элемент
+    this.nextYear = () => {
+      this.setState((state) => ({
+       years: ++state.years,
+     }));
+    };
+    */
+    // III способ добавления обработчика событий на каждый элемент
+  } // скобка относится к строке 9
+  /*
+  nextYear = () => {
+    this.setState((state) => ({
+      years: ++state.years,
+    }));
+  };
+  */
+  nextYear() {
+    this.setState((state) => ({
+      years: ++state.years,
+    }));
+  }
+
+  render() {
+    const { name, surname, link } = this.props;
+    const { years } = this.state;
+    return (
+      <>
+        <button onClick={this.nextYear}>++</button>
+        <h1>
+          My name is {name}, surname - {surname}, years = {years}
+        </h1>
+        <a href={link}>My profile</a>
+      </>
+    );
+  }
+}
+
+const All = () => {
+  return (
+    <>
+      <WhoAmI name="John" surname="Smith" link="facebook.com" />
+      <WhoAmI name="Linn" surname="Airis" link="vk.com" />
+      <WhoAmI name="George" surname="Adams" link="facebook.com" />
+    </>
+  );
+};
+
+ReactDOM.render(<All />, document.getElementById('root'));
+
+// ReactDOM.render(<App />, document.getElementById('root'));
